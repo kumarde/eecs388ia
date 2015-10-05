@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+	<div id = "clickme"> clickmeid </div>
+	<br><br>
+	<div class = "clickmeagain"> clickmeclass </div>
+	<br><br>
+	<div class = "clickmeagain"> computer security deserves a click </div>
+	
+	<script>
+		$(document).ready(function(){
+			$('#clickme').click(function(){
+				alert("clickmeid was clicked");	
+			});		
+		
+			$('.clickmeagain').click(function(){
+				alert("clickmeclass was clicked");	
+			});			
+		});
+	</script>
+	
+	
+</body>
+</html>

