@@ -1,0 +1,136 @@
+%%%%%%%%%%%%%%%%
+% Set options
+
+\newcommand{\settitle}{Lab 6: Introduction to Networking}
+\newcommand{\course}{EECS 388}
+\newcommand{\coursename}{Intro to Computer Security}
+\newcommand{\distdate}{}
+
+%%%%%%%%%%%%%%%%
+
+\documentclass[letterpaper,12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[protrusion=true,expansion=false]{microtype}
+\usepackage{color}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{mathptmx}
+\usepackage{enumitem}
+\usepackage{textcomp}
+\usepackage{mdwlist}
+\usepackage{listings}
+\usepackage{url}
+\usepackage[
+  breaklinks=true,colorlinks=true,linkcolor=black,%
+  citecolor=black,urlcolor=black,bookmarks=false,bookmarksopen=false,%
+  pdfauthor={\course},%
+  pdftitle={\settitle},%
+  pdftex]{hyperref}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyvrb}
+\usepackage{multicol}
+\def\textsb#1{{\fontseries{sb}\selectfont #1}}
+\urlstyle{rm}
+% Slight JAH fix to stop URLs from breaking after ``http:''
+\def\UrlBreaks{\do-\do\.\do\@\do\\\do\!\do\_\do\|\do\;\do\>\do\]%
+ \do\)\do\,\do\?\do\'\do+\do\=\do\#}
+\def\UrlBigBreaks{\do\:\do\/}%
+
+
+\newcommand{\problemsetdone}{\bigskip\hfill$\Box{}$}
+
+\newcommand{\htitle}
+{
+     \noindent\parbox{\textwidth}
+    {
+        \course\hfill \distdate\newline
+        \coursename\hfill 
+        \settitle \vspace*{-.5ex}\newline
+        \mbox{}\hrulefill\mbox{}
+    }
+    \vspace{8pt}
+    \begin{center}{\Large\bf{\settitle}}\end{center}
+}
+\newcommand{\handout}
+{
+    \thispagestyle{empty}
+    \markboth{}{}
+    \pagestyle{plain}
+    \htitle
+}
+
+\newcommand{\problemsetheader}
+{
+\setlength{\parindent}{0pt}
+
+This lab is intended to give you hands on experience with the network tools and processes we will be using in Project 3.
+
+\medskip
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Show or hide solutions:
+%\def\solution#1{\strut\smallskip\newline{\textsf{\color{blue}#1}}}
+\def\solution#1{\relax}
+
+\begin{document}
+\handout
+%\setlength{\parindent}{0pt}
+\problemsetheader
+
+\vspace*{-15pt}
+\section*{Introduction}
+
+EECS 388 is in trouble! An attacker has stolen some valuable information from our servers, and has hidden the data on a remote server. Only you can help us retrieve what was taken from us! Your mission, should you choose to accept it, is as follows...
+
+
+\vspace{-6pt}
+\subsection*{The Mission}
+
+\begin{enumerate}
+
+\item Our intel has found a program used by the attackers. Download the file "send.py" from \url{https://github.com/debug12/eecs388ia/tree/master/lab6}, and run it from the command line using 
+
+\begin{verbatim}
+$ python send.py
+\end{verbatim}
+
+While the file looks obfuscated and appears to do nothing, our intel believes that it is making network connections to a remote host. The best way to look into this is to create a packet capture file (pcap) that we can analyze with the network analysis tool Wireshark.
+
+\item First, determine which of your network interfaces are active. You can do this by running the following from the command line and checking the "status" attribute of each interface.
+
+\begin{verbatim}
+$ ifconfig
+\end{verbatim}
+
+\item Pick the name of the active wireless interface that your machine is using to make the network connections (likely begins with an "en"). From there, enter the following command
+
+\begin{verbatim}
+$ tcpdump -i <network_interface> -v
+\end{verbatim}
+
+And you can observe the network traffic! Now, with the "send.py" file running, execute the following command to save the dump to a file called "labdump.pcap"
+
+\begin{verbatim}
+$ tcpdump -i <network_interface> -v -w labdump.pcap
+\end{verbatim}
+
+and let tcpdump run for a few minutes to capture a good amount of network traffic.
+
+\item Now that we've captured a few packets, we can use a program like Wireshark to analyze them. Use Wireshark to open the "labdump.pcap" file, and observe the network trace. Do you see anything that might be useful?
+
+\item If given an IP address, you might like to know if there are any ports open to network connections. For example, a server can be running network services like ssh, http, ftp, smtp, etc. To determine what ports are open to connections, we can use the following command:
+
+\begin{verbatim}
+$ nmap <ip_addr>
+\end{verbatim}
+
+You might find this command useful in returning our data.
+
+Best of luck!
+
+\end{enumerate}
+\end{document}
+
